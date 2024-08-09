@@ -2,6 +2,16 @@
 
 Diego Andrés Alonzo Medinilla 20172
 
+## Ex 1
+
+![alt text](image-9.png)
+
+Los mensajes no están desplegados en orden debido a que al ser threads puede que unos threads lleguen antes que otros threads.
+
+## Ex 2
+
+![alt text](image-10.png)
+
 ## Ex 3
 
 Para X^2 con a = 2 y b = 10 y n = 10^6: 
