@@ -1,0 +1,8 @@
+services:
+  envi:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/parallel_computing
+    stdin_open: true
