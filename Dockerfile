@@ -17,7 +17,7 @@ CMD [ "/bin/bash" ]
 # docker run -it --name=parallel_computing_name parallel_computing
 
 # Run docker env set name and pwd
-# docker run -it --name=parallel_computing_name -v $(pwd):/parallel_computing parallel_computing
+# docker run -it --name=parallel_computing -v $(pwd):/parallel_computing parallel_computing
 
 # Run docker env
 # docker start parallel_computing
