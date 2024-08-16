@@ -4,6 +4,7 @@
 #include <omp.h>
 
 int main(int argc, char *argv[]) {
+    double factor = 1.0;
     double sum = 0.0;
     int n = 1;
     int thread_count = 1;
@@ -17,8 +18,9 @@ int main(int argc, char *argv[]) {
 
     #pragma omp parallel for num_threads(thread_count) reduction(+:sum)
     for (int k = 0; k < n; k++) {
-        double factor = (k % 2 == 0) ? 1.0 : -1.0;
+        factor = (k % 2 == 0) ? 1.0 : -1.0;
         sum += factor / (2*k + 1);
+        factor = -factor;
     }
     
     double pi_aprox = 4.0 * sum;
