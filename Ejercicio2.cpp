@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <omp.h>
-
 // Quicksort
 void quicksort(int* array, int lo, int hi) {
     if (lo >= hi) return;
@@ -20,7 +19,6 @@ void quicksort(int* array, int lo, int hi) {
         }
     }
     std::swap(array[left], array[hi]);
-
     // Paralelizacion de los mini arrays
     #pragma omp task shared(array)
     quicksort(array, lo, left - 1);
@@ -36,8 +34,10 @@ int main() {
     // Generación de números aleatorios
     std::ofstream outFile("numeros.csv");
     std::srand(std::time(0));
+    // #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
         int num = std::rand() % 1000;
+        // #pragma omp critical
         outFile << num;
         if (i < N - 1) outFile << ",";
     }
@@ -46,7 +46,9 @@ int main() {
     // Lectura de números desde el archivo
     int* array = new int[N];
     std::ifstream inFile("numeros.csv");
+    // #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
+        // #pragma omp critical
         inFile >> array[i];
         if (inFile.peek() == ',') inFile.ignore();
     }
@@ -62,14 +64,13 @@ int main() {
         quicksort(array, 0, N - 1);
     }
     double end_time = omp_get_wtime();
-    
-    // Calcular el tiempo en milisegundos
-    double time_in_ms = (end_time - start_time) * 1000.0;
-    std::cout << "Tiempo de ejecución paralelo: " << time_in_ms << " ms" << std::endl;
+    std::cout << "Tiempo de ejecución paralelo: " << (end_time - start_time)*1000 << " ms" << std::endl;
 
     // Escritura de números ordenados a un nuevo archivo
     std::ofstream sortedFile("numeros_ordenados.csv");
+    // #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
+        // #pragma omp critical
         sortedFile << array[i];
         if (i < N - 1) sortedFile << ",";
     }
