@@ -2,6 +2,8 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>  // Biblioteca para medir tiempo
+
 // Quicksort
 void quicksort(int* array, int lo, int hi) {
     if (lo >= hi) return;
@@ -21,6 +23,7 @@ void quicksort(int* array, int lo, int hi) {
     quicksort(array, lo, left - 1);
     quicksort(array, left + 1, hi);
 }
+
 // Main
 int main() {
     int N;
@@ -46,8 +49,14 @@ int main() {
     }
     inFile.close();
 
-    // Ordenamiento de números
+    // Medir el tiempo de ordenamiento
+    auto start = std::chrono::high_resolution_clock::now();
     quicksort(array, 0, N - 1);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Calcular la duración en milisegundos
+    std::chrono::duration<double, std::milli> duration = end - start;
+    std::cout << "Tiempo de ordenamiento: " << duration.count() << " ms" << std::endl;
 
     // Escritura de números ordenados a un nuevo archivo
     std::ofstream sortedFile("numeros_ordenados.csv");

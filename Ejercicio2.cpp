@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <omp.h>
+
 // Quicksort
 void quicksort(int* array, int lo, int hi) {
     if (lo >= hi) return;
@@ -20,6 +21,7 @@ void quicksort(int* array, int lo, int hi) {
     }
     std::swap(array[left], array[hi]);
 
+    // Paralelizacion de los mini arrays
     #pragma omp task shared(array)
     quicksort(array, lo, left - 1);
     #pragma omp task shared(array)
@@ -52,13 +54,18 @@ int main() {
 
     // Ordenamiento de números con QuickSort Paralelo
     double start_time = omp_get_wtime();
+    // Crear multiples hilos 
     #pragma omp parallel
     {
+        // Esto asegura que solo un hilo se llamara al principio aunque existan los demas hilos para el uso
         #pragma omp single nowait
         quicksort(array, 0, N - 1);
     }
     double end_time = omp_get_wtime();
-    std::cout << "Tiempo de ejecución paralelo: " << (end_time - start_time) << " segundos" << std::endl;
+    
+    // Calcular el tiempo en milisegundos
+    double time_in_ms = (end_time - start_time) * 1000.0;
+    std::cout << "Tiempo de ejecución paralelo: " << time_in_ms << " ms" << std::endl;
 
     // Escritura de números ordenados a un nuevo archivo
     std::ofstream sortedFile("numeros_ordenados.csv");
