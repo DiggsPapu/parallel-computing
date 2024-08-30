@@ -1,5 +1,5 @@
 FROM ubuntu:22.04
-WORKDIR /parallel_computing/Ejercicio1/
+WORKDIR /parallel_computing/
   
 RUN apt-get update -y && \
     apt-get upgrade -y && \
