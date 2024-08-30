@@ -40,16 +40,21 @@ int main() {
     // Generación de números aleatorios
     std::ofstream outFile("numeros.csv");
     std::srand(std::time(0));
+    #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
         int num = std::rand() % 1000;
-        outFile << num;
-        if (i < N - 1) outFile << ",";
+        #pragma omp critical
+        {
+            outFile << num;
+            if (i < N - 1) outFile << ",";
+        }
     }
     outFile.close();
 
     // Lectura de números desde el archivo
     int* array = new int[N];
     std::ifstream inFile("numeros.csv");
+    #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
         inFile >> array[i];
         if (inFile.peek() == ',') inFile.ignore();
@@ -64,9 +69,13 @@ int main() {
 
     // Escritura de números ordenados a un nuevo archivo
     std::ofstream sortedFile("numeros_ordenados.csv");
+    #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
-        sortedFile << array[i];
-        if (i < N - 1) sortedFile << ",";
+        #pragma omp critical
+        {
+            sortedFile << array[i];
+            if (i < N - 1) sortedFile << ",";
+        }
     }
     sortedFile.close();
 
