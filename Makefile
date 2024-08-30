@@ -1,10 +1,10 @@
 # Variables
 CXX = g++
 CXXFLAGS = -fopenmp -Wall
-TARGET = Ejercicio1
-SOURCES = Ejercicio1.cpp
-# TARGET = Ejercicio2
-# SOURCES = Ejercicio2.cpp
+# TARGET = Ejercicio1
+# SOURCES = Ejercicio1.cpp
+TARGET = Ejercicio2
+SOURCES = Ejercicio2.cpp
 CSVFILES = numeros.csv numeros_ordenados.csv
 
 # Default target

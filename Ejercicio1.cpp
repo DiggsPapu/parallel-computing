@@ -29,7 +29,9 @@ int main() {
     int N;
     std::cout << "Ingrese el número de elementos: ";
     std::cin >> N;
-
+    // Medir el tiempo de ordenamiento
+    auto start = std::chrono::high_resolution_clock::now();
+    
     // Generación de números aleatorios
     std::ofstream outFile("numeros.csv");
     std::srand(std::time(0));
@@ -49,14 +51,7 @@ int main() {
     }
     inFile.close();
 
-    // Medir el tiempo de ordenamiento
-    auto start = std::chrono::high_resolution_clock::now();
     quicksort(array, 0, N - 1);
-    auto end = std::chrono::high_resolution_clock::now();
-
-    // Calcular la duración en milisegundos
-    std::chrono::duration<double, std::milli> duration = end - start;
-    std::cout << "Tiempo de ordenamiento: " << duration.count() << " ms" << std::endl;
 
     // Escritura de números ordenados a un nuevo archivo
     std::ofstream sortedFile("numeros_ordenados.csv");
@@ -68,6 +63,10 @@ int main() {
 
     // Liberar memoria
     delete[] array;
-
+    
+    auto end = std::chrono::high_resolution_clock::now();
+    // Calcular la duración en milisegundos
+    std::chrono::duration<double, std::milli> duration = end - start;
+    std::cout << "Tiempo del programa: " << duration.count() << " ms" << std::endl;
     return 0;
 }

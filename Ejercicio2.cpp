@@ -2,7 +2,9 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>  // Biblioteca para medir tiempo
 #include <omp.h>
+
 // Quicksort
 void quicksort(int* array, int lo, int hi) {
     if (lo >= hi) return;
@@ -19,25 +21,27 @@ void quicksort(int* array, int lo, int hi) {
         }
     }
     std::swap(array[left], array[hi]);
-    // Paralelizacion de los mini arrays
+    
     #pragma omp task shared(array)
     quicksort(array, lo, left - 1);
+    
     #pragma omp task shared(array)
     quicksort(array, left + 1, hi);
 }
 
+// Main
 int main() {
     int N;
     std::cout << "Ingrese el número de elementos: ";
     std::cin >> N;
-
+    // Medir el tiempo de ordenamiento
+    auto start = std::chrono::high_resolution_clock::now();
+    
     // Generación de números aleatorios
     std::ofstream outFile("numeros.csv");
     std::srand(std::time(0));
-    // #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
         int num = std::rand() % 1000;
-        // #pragma omp critical
         outFile << num;
         if (i < N - 1) outFile << ",";
     }
@@ -46,31 +50,21 @@ int main() {
     // Lectura de números desde el archivo
     int* array = new int[N];
     std::ifstream inFile("numeros.csv");
-    // #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
-        // #pragma omp critical
         inFile >> array[i];
         if (inFile.peek() == ',') inFile.ignore();
     }
     inFile.close();
 
-    // Ordenamiento de números con QuickSort Paralelo
-    double start_time = omp_get_wtime();
-    // Crear multiples hilos 
     #pragma omp parallel
     {
-        // Esto asegura que solo un hilo se llamara al principio aunque existan los demas hilos para el uso
         #pragma omp single nowait
         quicksort(array, 0, N - 1);
     }
-    double end_time = omp_get_wtime();
-    std::cout << "Tiempo de ejecución paralelo: " << (end_time - start_time)*1000 << " ms" << std::endl;
 
     // Escritura de números ordenados a un nuevo archivo
     std::ofstream sortedFile("numeros_ordenados.csv");
-    // #pragma omp parallel for
     for (int i = 0; i < N; ++i) {
-        // #pragma omp critical
         sortedFile << array[i];
         if (i < N - 1) sortedFile << ",";
     }
@@ -78,6 +72,10 @@ int main() {
 
     // Liberar memoria
     delete[] array;
-
+    
+    auto end = std::chrono::high_resolution_clock::now();
+    // Calcular la duración en milisegundos
+    std::chrono::duration<double, std::milli> duration = end - start;
+    std::cout << "Tiempo del programa: " << duration.count() << " ms" << std::endl;
     return 0;
 }
