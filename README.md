@@ -24,20 +24,20 @@ Diego Andrés Alonzo Medinilla 20172
 ## How to run the files?
 
 - Ex 1:
-    - Compilation
+    - Compilation && Execution
         ```bash
-        g++ Ejercicio1.cpp -o Ejercicio1
+        make run
         ```
-    - Execution
+    - Cleaning 
         ```bash    
-        ./Ejercicio1
+        make clean
         ```
 - Ex 2:
-    - Compilation
-        ```bash    
-        g++ Ejercicio2.cpp -fopenmp -o Ejercicio2
-        ```
-    - Execution
+    - Compilation && Execution
         ```bash
-        ./Ejercicio2
+        make -f Makefile2 run
+        ```
+    - Cleaning 
+        ```bash    
+        make -f Makefile2 clean
         ```
