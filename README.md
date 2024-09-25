@@ -41,3 +41,13 @@ Diego Andrés Alonzo Medinilla 20172
         ```bash    
         make -f Makefile2 clean
         ```
+
+- Ex 3:
+    - Compilation && Execution
+        ```bash
+        make -f Makefile3 run
+        ```
+    - Cleaning 
+        ```bash    
+        make -f Makefile3 clean
+        ```
