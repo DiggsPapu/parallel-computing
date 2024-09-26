@@ -9,35 +9,49 @@ int main(int argc, char** argv) {
     int local_max, global_max;
     int local_min, global_min;
     float global_promedio;
-    int array_size = 10;
+    int array_size;
     int local_array_size;
 
+    // Inicializar MPI
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    // Calcular el tamaño del array que será distribuido a cada proceso
-    local_array_size = array_size / size;
+    // Comenzar a medir el tiempo
+    double start_time = MPI_Wtime();  // Guardar el tiempo de inicio
 
-    int *local_array = (int*)malloc(local_array_size * sizeof(int));
-
-    // El proceso maestro lee el archivo y distribuye los datos a los demás procesos
+    // El proceso maestro lee el archivo y determina el tamaño del array
     if (rank == 0) {
-        array = (int*)malloc(array_size * sizeof(int));
-
-        // Leer el archivo
-        FILE *file = fopen("array.txt", "r");
+        // Abrir el archivo para contar cuántos números hay
+        FILE *file = fopen("numeros_aleatorios.txt", "r");
         if (file == NULL) {
             printf("Error al abrir el archivo\n");
             MPI_Abort(MPI_COMM_WORLD, 1);
         }
 
-        // Cargar los datos en el array
+        // Contar el número de elementos en el archivo
+        array_size = 0;
+        int valor;
+        while (fscanf(file, "%d", &valor) == 1) {
+            array_size++;
+        }
+        rewind(file); // Regresar al inicio del archivo
+
+        // Asignar memoria para el array y cargar los datos
+        array = (int*)malloc(array_size * sizeof(int));
         for (int i = 0; i < array_size; i++) {
             fscanf(file, "%d", &array[i]);
         }
         fclose(file);
     }
+
+    // Difundir el tamaño del array a todos los procesos
+    MPI_Bcast(&array_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    // Calcular el tamaño del array que será distribuido a cada proceso
+    local_array_size = array_size / size;
+
+    int *local_array = (int*)malloc(local_array_size * sizeof(int));
 
     // Distribuir el array a los procesos usando Scatter
     MPI_Scatter(array, local_array_size, MPI_INT, local_array, local_array_size, MPI_INT, 0, MPI_COMM_WORLD);
@@ -76,7 +90,14 @@ int main(int argc, char** argv) {
         printf("Mínimo: %d\n", global_min);
         printf("Promedio: %.2f\n", global_promedio);
 
-        free(array);
+        // Finalizar el tiempo y calcular la duración
+        double end_time = MPI_Wtime();  // Guardar el tiempo de finalización
+        double time_taken = end_time - start_time;  // Calcular el tiempo transcurrido
+
+        // Mostrar el tiempo de ejecución
+        printf("Tiempo de ejecución: %.6f segundos\n", time_taken);
+
+        free(array);  // Liberar memoria del array en el proceso maestro
     }
 
     free(local_array);
