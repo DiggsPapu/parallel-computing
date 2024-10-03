@@ -18,13 +18,15 @@ Porque lo que hace es crear un umbral (límite) para que no cree tareas para tar
 
 ![alt text](image.png)
 
+
 <table> 
     <thead> 
         <tr> 
             <th>Numero Threads</th>
             <th>Secuencial</th> 
             <th>Paralelo</th> 
-            <th>Paralelo Threshold</th>
+            <th>Threshold</th>
+            <th>Speedup (Paralelo vs Threshold)</th>
         </tr> 
     </thead> 
     <tbody> 
@@ -33,18 +35,23 @@ Porque lo que hace es crear un umbral (límite) para que no cree tareas para tar
             <td>1.038719</td> 
             <td>210.859499</td> 
             <td>1.049860</td> 
+            <td>200.8453498561713</td> 
         </tr> 
         <tr> 
             <td>4</td> 
             <td>1.078878</td> 
             <td>258.521675</td> 
             <td>1.107939</td> 
+            <td>233.3356574685068</td> 
         </tr> 
         <tr> 
             <td>5</td> 
-            <td>1.078878</td> 
-            <td>258.521675</td> 
-            <td>1.107939</td> 
+            <td>1.040152</td> 
+            <td>291.605807</td> 
+            <td>1.216911</td> 
+            <td>239.6278832223556</td> 
         </tr> 
     </tbody> 
 </table>
+
+En promedio el speed up entre el threshold vs paralelo fue 224.6029635156779
