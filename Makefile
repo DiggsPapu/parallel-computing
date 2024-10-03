@@ -1,16 +1,16 @@
 # Define the compiler and the executable name
-CC = mpicc
+CC = gcc                # Usar gcc para OpenMP en lugar de mpicc
 TARGET = fib
 SRC = fib.c
 
-# Default rule to compile the code
+# Default rule to compile the code with OpenMP support
 all: $(TARGET)
 
-# Compile the mpi_hello.c file into an executable
+# Compile the fib.c file into an executable with OpenMP support
 $(TARGET): $(SRC)
-	$(CC) -o $(TARGET) $(SRC)
+	$(CC) -fopenmp -o $(TARGET) $(SRC)   # Añadir la opción -fopenmp
 
-# Rule to run the executable with 4 processes
+# Rule to run the executable
 run: $(TARGET)
 	./$(TARGET)
 

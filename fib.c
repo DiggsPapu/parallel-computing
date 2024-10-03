@@ -53,7 +53,7 @@ long long fib_recursive_omp_fix(int n) {
 }
 
 int main() {
-    int n;
+    int n, num_threads;
     long long result;
     clock_t start, end;
     double cpu_time_used;
@@ -62,7 +62,14 @@ int main() {
     printf("Ingrese un número para calcular Fibonacci: ");
     scanf("%d", &n);
 
-    // Registrar el tiempo de inicio
+    // Pedir al usuario que ingrese la cantidad de threads
+    printf("Ingrese la cantidad de threads a utilizar: ");
+    scanf("%d", &num_threads);
+
+    // Configurar la cantidad de threads en OpenMP
+    omp_set_num_threads(num_threads);
+
+    // Registrar el tiempo de inicio para la versión secuencial
     start = clock();
     result = fib_recursive(n);
     end = clock();
@@ -96,7 +103,6 @@ int main() {
 
     printf("Fibonacci de %d es: %lld (con OpenMP y threshold)\n", n, result);
     printf("Tiempo de ejecución (con OpenMP y threshold): %f segundos\n", cpu_time_used);
-
 
     return 0;
 }
