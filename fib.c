@@ -28,14 +28,14 @@ long long fib_recursive(int n) {
     return fib_recursive(n - 1) + fib_recursive(n - 2);
 }
 
-#define THRESHOLD 20  // Definir un umbral para evitar la creación de tareas innecesarias
+#define THRESHOLD 20
 
 // Función recursiva paralelizada con OpenMP y threshold
 long long fib_recursive_omp_fix(int n) {
     if (n <= 1) {
         return n;
     }
-    // Si el valor de n es menor que el umbral, calcular secuencialmente
+    // Limite de 20 para evitar la creación de tareas innecesarias
     if (n < THRESHOLD) {
         return fib_recursive(n);
     }
@@ -66,7 +66,7 @@ int main() {
     printf("Ingrese la cantidad de threads a utilizar: ");
     scanf("%d", &num_threads);
 
-    // Configurar la cantidad de threads en OpenMP
+    // Threads a utilizar
     omp_set_num_threads(num_threads);
 
     // Registrar el tiempo de inicio para la versión secuencial
