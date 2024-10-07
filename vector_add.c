@@ -29,16 +29,24 @@ void Vector_sum(double x[], double y[], double z[], int n);
 int main(void) {
     int n = VECTOR_SIZE;
     double *x, *y, *z;
+    clock_t start, end;
+    double cpu_time_used;
+
+    // Start measuring time for vector allocation and initialization
+    start = clock();
 
     Allocate_vectors(&x, &y, &z, n);
     Generate_random_vector(x, n);
     Generate_random_vector(y, n);
     Vector_sum(x, y, z, n);
 
+    // End measuring time for vector allocation and initialization
+    end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     Print_vector(x, n, "Vector x:");
     Print_vector(y, n, "Vector y:");
     Print_vector(z, n, "The sum vector z:");
-
+    printf("\nTook %f ms to run\n", (cpu_time_used) * 1000);
     free(x);
     free(y);
     free(z);
