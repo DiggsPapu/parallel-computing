@@ -33,6 +33,8 @@ void Allocate_vectors(double** local_x_pp, double** local_y_pp, double** local_z
 void Generate_random_vector(double local_a[], int local_n, int n, int my_rank, MPI_Comm comm);
 void Print_vector(double local_b[], int local_n, int n, char title[], int my_rank, MPI_Comm comm);
 void Parallel_vector_sum(double local_x[], double local_y[], double local_z[], int local_n);
+double Dot_product(double local_x[], double local_y[], int local_n);
+void Scalar_multiply(double local_a[], double local_b[], double scalar, int local_n);
 
 /*-------------------------------------------------------------------*/
 int main(void) {
@@ -41,6 +43,7 @@ int main(void) {
     int comm_sz, my_rank;
     double *local_x, *local_y, *local_z;
     MPI_Comm comm;
+    double scalar = 3.0;
     double tstart, tend;
 
     MPI_Init(NULL, NULL);
@@ -56,14 +59,26 @@ int main(void) {
     Generate_random_vector(local_y, local_n, n, my_rank, comm);
 
     Parallel_vector_sum(local_x, local_y, local_z, local_n);
+    
+    // Calcular producto punto
+    double local_dot = Dot_product(local_x, local_y, local_n);
+    double global_dot;
+    MPI_Reduce(&local_dot, &global_dot, 1, MPI_DOUBLE, MPI_SUM, 0, comm);
+
+    // Calcular el producto escalar
+    Scalar_multiply(local_x, local_x, scalar, local_n); // Multiplicando x por escalar
+    Scalar_multiply(local_y, local_y, scalar, local_n); // Multiplicando y por escalar
+
     tend = MPI_Wtime();
 
     Print_vector(local_x, local_n, n, "Vector x", my_rank, comm);
     Print_vector(local_y, local_n, n, "Vector y", my_rank, comm);
     Print_vector(local_z, local_n, n, "Resultant vector z = x + y", my_rank, comm);
 
-    if (my_rank == 0)
+    if (my_rank == 0) {
+        printf("\nProducto punto total: %f\n", global_dot);
         printf("\nTook %f ms to run\n", (tend - tstart) * 1000);
+    }
 
     free(local_x);
     free(local_y);
@@ -174,3 +189,23 @@ void Parallel_vector_sum(double local_x[], double local_y[], double local_z[], i
     for (local_i = 0; local_i < local_n; local_i++)
         local_z[local_i] = local_x[local_i] + local_y[local_i];
 } /* Parallel_vector_sum */
+
+/*-------------------------------------------------------------------
+ * Function: Dot_product
+ * Purpose: Calculate the dot product of two local vectors.
+ */
+double Dot_product(double local_x[], double local_y[], int local_n) {
+    double local_sum = 0.0;
+    for (int i = 0; i < local_n; i++)
+        local_sum += local_x[i] * local_y[i];
+    return local_sum;
+}
+
+/*-------------------------------------------------------------------
+ * Function: Scalar_multiply
+ * Purpose: Multiply a vector by a scalar.
+ */
+void Scalar_multiply(double local_a[], double local_b[], double scalar, int local_n) {
+    for (int i = 0; i < local_n; i++)
+        local_b[i] = local_a[i] * scalar;
+}

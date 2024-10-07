@@ -25,6 +25,9 @@ d. Print_vector()  esta funci[on se encarga de imprimir un vector que tiene un b
 ### Paralela 
 ![alt text](image.png)
 
+### Secuencial
+![alt text](image-1.png)
+
 <table>
     <thead>
         <th>Secuencial (ms)</th>
@@ -86,3 +89,10 @@ d. Print_vector()  esta funci[on se encarga de imprimir un vector que tiene un b
 </table>
 
 Promedio 0.8959534000000001
+
+## Inciso 4
+![alt text](image-2.png)
+
+## Reflexión
+
+Este laboratorio fue una oportunidad para profundizar en programación paralela con MPI de manera que se pudo sincronizar la comunicación, utilizar eficientemente los recursos además de subdividir el problema en diferentes funciones para hacerlo más sencillo de solventar. Esta programación paralela fue desafiante y realmente puede ser útil para mejorar el rendimiento en sistemas distribuidos.
