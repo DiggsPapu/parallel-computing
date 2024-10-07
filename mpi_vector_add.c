@@ -36,7 +36,7 @@ void Parallel_vector_sum(double local_x[], double local_y[], double local_z[], i
 
 /*-------------------------------------------------------------------*/
 int main(void) {
-    int n = 100000; // Minimum of 100,000 elements as required
+    int n = 95000000; // Minimum of 100,000 elements as required
     int local_n;
     int comm_sz, my_rank;
     double *local_x, *local_y, *local_z;

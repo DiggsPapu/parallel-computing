@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define VECTOR_SIZE 100000  // Minimum size of the vectors
+#define VECTOR_SIZE 95000000  // Minimum size of the vectors
 
 void Allocate_vectors(double** x_pp, double** y_pp, double** z_pp, int n);
 void Generate_random_vector(double a[], int n);

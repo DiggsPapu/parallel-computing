@@ -22,63 +22,67 @@ c. Read_data() esta función sirve para leer un vector en el proceso 0 y distrib
 d. Print_vector()  esta funci[on se encarga de imprimir un vector que tiene un bloque de distribución en stdout.
 
 ## Pregunta 2
+### Paralela 
+![alt text](image.png)
 
 <table>
     <thead>
-        <th>Secuencial</th>
-        <th>Paralela</th>
+        <th>Secuencial (ms)</th>
+        <th>Paralela (ms)</th>
         <th>Speedup</th>
     </thead>
     <tbody>
         <tr>
-            <td>4.996000</td>
-            <td>6.240508</td>
-            <td>0.801802</td>
+            <td>4154.603000</td>
+            <td>5976.773385</td>
+            <td>0.694811</td>
         </tr>
         <tr>
-            <td>4.219000</td>
-            <td>4.651753</td>
-            <td>0.907056</td>
+            <td>4808.581000</td>
+            <td>4619.429738</td>
+            <td>1.041066</td>
         </tr>
         <tr>
-            <td>4.493000</td>
-            <td>6.145043</td>
-            <td>0.731062</td>
+            <td>5948.869000</td>
+            <td>5672.692309</td>
+            <td>1.048586</td>
         </tr>
         <tr>
-            <td>4.323000</td>
-            <td>4.374057</td>
-            <td>0.987295</td>
+            <td>4367.314000</td>
+            <td>6014.467925</td>
+            <td>0.725844</td>
         </tr>
         <tr>
-            <td>4.814000</td>
-            <td>4.498931</td>
-            <td>1.071025</td>
+            <td>4814.000000</td>
+            <td>5057.870294</td>
+            <td>0.950391</td>
         </tr>
         <tr>
-            <td>5.355000</td>
-            <td>6.010994</td>
-            <td>0.890619</td>
+            <td>4839.353000</td>
+            <td>5272.062483</td>
+            <td>0.916920</td>
         </tr>
         <tr>
-            <td>4.532000</td>
-            <td>4.544585</td>
-            <td>0.998969</td>
+            <td>3939.731000</td>
+            <td>6284.705381</td>
+            <td>0.626297</td>
         </tr>
         <tr>
-            <td>4.244000</td>
-            <td>6.960463</td>
-            <td>0.609041</td>
+            <td>5779.955000</td>
+            <td>6040.599925</td>
+            <td>0.957248</td>
         </tr>
         <tr>
-            <td>4.763000</td>
-            <td>6.211874</td>
-            <td>0.766568</td>
+            <td>5263.288000</td>
+            <td>4390.810820</td>
+            <td>1.196584</td>
         </tr>
         <tr>
-            <td>4.354000</td>
-            <td>6.657810</td>
-            <td>0.654538</td>
+            <td>4698.957000</td>
+            <td>5861.174549</td>
+            <td>0.801787</td>
         </tr>
     </tbody>
 </table>
+
+Promedio 0.8959534000000001
