@@ -1,6 +1,9 @@
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
+#define ARRAY_SIZE 5000
 
 int main(int argc, char** argv) {
     int rank, size;
@@ -9,7 +12,7 @@ int main(int argc, char** argv) {
     int local_max, global_max;
     int local_min, global_min;
     float global_promedio;
-    int array_size;
+    int array_size = ARRAY_SIZE;  // Cambiar a una variable
     int local_array_size;
 
     // Inicializar MPI
@@ -20,29 +23,17 @@ int main(int argc, char** argv) {
     // Comenzar a medir el tiempo
     double start_time = MPI_Wtime();  // Guardar el tiempo de inicio
 
-    // El proceso maestro lee el archivo y determina el tamaño del array
+    // El proceso maestro genera el array aleatorio
     if (rank == 0) {
-        // Abrir el archivo para contar cuántos números hay
-        FILE *file = fopen("numeros_aleatorios.txt", "r");
-        if (file == NULL) {
-            printf("Error al abrir el archivo\n");
-            MPI_Abort(MPI_COMM_WORLD, 1);
-        }
-
-        // Contar el número de elementos en el archivo
-        array_size = 0;
-        int valor;
-        while (fscanf(file, "%d", &valor) == 1) {
-            array_size++;
-        }
-        rewind(file); // Regresar al inicio del archivo
-
-        // Asignar memoria para el array y cargar los datos
+        // Asignar memoria para el array y generar valores aleatorios
         array = (int*)malloc(array_size * sizeof(int));
+        srand(time(NULL));  // Inicializar la semilla para la generación aleatoria
+        printf("Array: [");
         for (int i = 0; i < array_size; i++) {
-            fscanf(file, "%d", &array[i]);
+            array[i] = rand() % 1000;  // Generar valores enteros aleatorios entre 0 y 999
+            printf("%d,", array[i]);
         }
-        fclose(file);
+        printf("]\n");
     }
 
     // Difundir el tamaño del array a todos los procesos
