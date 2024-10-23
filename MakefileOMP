@@ -19,7 +19,7 @@ $(EXEC): $(SRC)
 
 # Regla para ejecutar con argumentos
 run:
-	./$(EXEC) 10 20 4
+	./$(EXEC) 0 1000000000000000 4
 
 # Regla para limpiar los archivos compilados
 clean:
