@@ -17,7 +17,7 @@ all: $(EXEC)
 $(EXEC): $(SRC)
 	$(CC) $(CFLAGS) -o $(EXEC) $(SRC) -lm
 
-# Regla para ejecutar con argumentos
+# Regla para ejecutar con argumeantos
 run:
 	./$(EXEC) 10 20
 

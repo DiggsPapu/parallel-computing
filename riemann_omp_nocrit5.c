@@ -21,16 +21,16 @@ float trapezoides(int a, int b, int num_threads) {
         for (int i = 0; i < n_local; i++) {
             float Xi = a_local + i * h;
             // En caso de f(x) = x^2
-            // local_result += pow(Xi,2);
+            // local_result += pow(Xi, 2);
             // En caso de 2x^3
-            local_result += 2*pow(Xi, 3);
+            local_result += 2 * pow(Xi, 3);
             // En caso de sin(x)
             local_result += sin(Xi);
             if (i == n_local - 1) {
                 // En caso de f(x) = x^2
-                // local_result += pow(b_local,2);
+                // local_result += pow(b_local, 2);
                 // En caso de 2x^3
-                local_result += 2*pow(b_local, 3);
+                local_result += 2 * pow(b_local, 3);
                 // En caso de sin(x)
                 // local_result += sin(b_local);
             }
@@ -62,7 +62,20 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    printf("Resultado: %f\n", trapezoides(a, b, num_threads));
+    // Obtener el tiempo de inicio
+    double start_time = omp_get_wtime();
+
+    float result = trapezoides(a, b, num_threads);
+
+    // Obtener el tiempo de fin
+    double end_time = omp_get_wtime();
+
+    // Calcular el tiempo de ejecución
+    double execution_time = end_time - start_time;
+
+    // Imprimir resultado y tiempo de ejecución
+    printf("Resultado: %f\n", result);
+    printf("Tiempo de ejecución: %f segundos\n", execution_time);
 
     return 0;
 }

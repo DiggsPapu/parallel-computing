@@ -17,6 +17,11 @@ int main(int argc, char** argv) {
     double local_sum = 0.0, global_sum = 0.0;
     double h, local_a, local_b;
     int local_n;
+    double start_time, end_time, execution_time;
+
+    MPI_Init(&argc, &argv); // Inicializar el entorno MPI
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank); // Obtener el identificador del proceso
+    MPI_Comm_size(MPI_COMM_WORLD, &size); // Obtener el número de procesos
 
     // Leer argumentos de línea de comandos
     if (argc < 3) {
@@ -30,9 +35,9 @@ int main(int argc, char** argv) {
     a = atof(argv[1]);
     b = atof(argv[2]);
 
-    MPI_Init(&argc, &argv); // Inicializar el entorno MPI
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank); // Obtener el identificador del proceso
-    MPI_Comm_size(MPI_COMM_WORLD, &size); // Obtener el número de procesos
+    // Sincronizar todos los procesos y obtener el tiempo de inicio
+    MPI_Barrier(MPI_COMM_WORLD);
+    start_time = MPI_Wtime();
 
     // Definir los subintervalos
     h = (b - a) / n; // Tamaño de cada subintervalo
@@ -51,9 +56,15 @@ int main(int argc, char** argv) {
     // Reducir y combinar las sumas parciales
     MPI_Reduce(&local_sum, &global_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
-    // El proceso rank 0 imprime el resultado
+    // Obtener el tiempo de fin y calcular la duración
+    MPI_Barrier(MPI_COMM_WORLD);
+    end_time = MPI_Wtime();
+    execution_time = end_time - start_time;
+
+    // El proceso rank 0 imprime el resultado y el tiempo de ejecución
     if (rank == 0) {
         printf("Resultado aproximado de la integral en el rango [%f, %f]: %f\n", a, b, global_sum);
+        printf("Tiempo de ejecución: %f segundos\n", execution_time);
     }
 
     MPI_Finalize(); // Finalizar el entorno MPI
