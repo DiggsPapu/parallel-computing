@@ -11,16 +11,16 @@ float trapezoides(int a, int b){
         // En caso de f(x) = x^2
         // result += pow(Xi,2);
         // En caso de 2x^3
-        // result += 2*pow(Xi, 3);
+        result += 2*pow(Xi, 3);
         // En caso de sin(x)
         result += sin(Xi);
         if (n-1 == i){
             // En caso de f(x) = x^2
             // result += pow(b,2);
             // En caso de 2x^3
-            // result += 2*pow(b, 3);
+            result += 2*pow(b, 3);
             // En caso de sin(x)
-            result += sin(b);
+            // result += sin(b);
         }
     }
     result = result * h;
@@ -36,5 +36,5 @@ int main(int argc, char *argv[]) {
         b = atoi(argv[2]);
     };
     printf("resultado : %f\n", trapezoides(a, b));
-    return 1;
+    return 0;
 }

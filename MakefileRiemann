@@ -1,0 +1,26 @@
+# Nombre del compilador (puede ser gcc o mpicc si deseas usar Open MPI)
+CC = gcc
+
+# Opciones de compilación (se añade -lm para enlazar la biblioteca matemática)
+CFLAGS = -O2 -Wall
+
+# Nombre del ejecutable
+EXEC = riemann
+
+# Nombre del archivo fuente
+SRC = riemann.c
+
+# Regla por defecto
+all: $(EXEC)
+
+# Regla para compilar el ejecutable
+$(EXEC): $(SRC)
+	$(CC) $(CFLAGS) -o $(EXEC) $(SRC) -lm
+
+# Regla para ejecutar con argumentos
+run:
+	./$(EXEC) 10 20
+
+# Regla para limpiar los archivos compilados
+clean:
+	rm -f $(EXEC)

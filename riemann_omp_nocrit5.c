@@ -25,7 +25,7 @@ float trapezoides(int a, int b, int num_threads) {
             // En caso de 2x^3
             local_result += 2*pow(Xi, 3);
             // En caso de sin(x)
-            // local_result += sin(Xi);
+            local_result += sin(Xi);
             if (i == n_local - 1) {
                 // En caso de f(x) = x^2
                 // local_result += pow(b_local,2);

@@ -1,0 +1,26 @@
+# Nombre del compilador (puede ser gcc o mpicc si deseas usar Open MPI)
+CC = gcc
+
+# Opciones de compilación (-fopenmp para habilitar OpenMP y -lm para la biblioteca matemática)
+CFLAGS = -O2 -Wall -fopenmp
+
+# Nombre del ejecutable
+EXEC = riemann_omp_nocrit5
+
+# Nombre del archivo fuente
+SRC = riemann_omp_nocrit5.c
+
+# Regla por defecto
+all: $(EXEC)
+
+# Regla para compilar el ejecutable
+$(EXEC): $(SRC)
+	$(CC) $(CFLAGS) -o $(EXEC) $(SRC) -lm
+
+# Regla para ejecutar con argumentos
+run:
+	./$(EXEC) 10 20 4
+
+# Regla para limpiar los archivos compilados
+clean:
+	rm -f $(EXEC)
