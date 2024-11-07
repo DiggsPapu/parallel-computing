@@ -23,7 +23,8 @@ b. Modifique el programa para correr 2 bloques de 1024 hilos.  Modificarlo tambi
 ![alt text](image-1.png)
 
 c. Compute Capability
-![alt text](image-2.png)
+
+![alt text](image-5.png)
 
 ![alt text](image-3.png)
 
@@ -32,3 +33,11 @@ Basado en eso tiene una compute capability de 8.6 dado que es RTX 3500 > RTX 300
 d. Modifique el programa para correr un bloque con 2048 hilos
 ![alt text](image-4.png)
 No imprime nada, esto es debido a que lo máximo de hilos que puede tener es de 1024.
+
+e. Busque en la tabla CC 
+
+![alt text](image-7.png)
+
+No encontré una tabla que me indicara eso por lo que decidí hacer un programa que me obtuviera esas especificaciones:
+
+![alt text](image-6.png)
