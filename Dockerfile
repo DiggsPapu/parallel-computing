@@ -13,7 +13,6 @@ CMD [ "/bin/bash" ]
 # Naming the image
 # docker build -t parallel_computing .
 
-# Naming the container env
 # docker run -it --name=parallel_computing_name parallel_computing
 
 # Run docker env set name and pwd
