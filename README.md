@@ -41,3 +41,21 @@ e. Busque en la tabla CC
 No encontré una tabla que me indicara eso por lo que decidí hacer un programa que me obtuviera esas especificaciones:
 
 ![alt text](image-6.png)
+
+## Ejercicio 2
+
+a. Descargue,  compile  y  ejecute  hello2.cu.    Observe  la  relación  de  la  configuración  de  la  llamada  al  
+kernel con la geometría de los hilos y el resultado.  Escriba la respuesta a los dos enunciados:
+
+- Maximo ID de hilos: 240
+- Ejecución de los hilos en orden: Los hilos van en conjuntos de 20 en 20 de manera que empieza en 100 hasta 119, luego pasa a otro bloque y así.
+
+![alt text](image-8.png)
+
+b. Observe que la fórmula genérica para cálculo del ID global está en los comentarios.  Modifique el programa para que imprima también su nombre y carné. Luego, realice la siguiente modificación al programa (al inicio del main) y use la fórmula genérica para derivar el nuevo cálculo de ID 
+
+![alt text](image-9.png)
+
+c. Revise nuevamente la información del Compute Capability respecto a las dimensiones máximas de hilos-bloque en x, y, & z para una grilla.  Cree una configuración para lanzar exitosamente el kernel para  procesar  100,000  datos. (Sugerencia:  busque  una  configuración  que  lance  como  mínimo 100,000  hilos.    Modifique  el  kernel  para  que  imprima  el  mensaje  únicamente  si  es  el  ID  global máximo)
+
+![alt text](image-11.png)
