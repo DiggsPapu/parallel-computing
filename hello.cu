@@ -13,12 +13,19 @@
 
 __global__ void hello()
 {
-   printf("Hello world\n");
+  // Print a message only for the last thread (1023) of each block
+  // Thread id in a block
+  if (threadIdx.x == 1023)
+  {
+     printf("Hello world from thread %d, block %d\n", threadIdx.x, blockIdx.x);
+     printf("Name: Diego Alonzo, Carne: 20172\n");
+  }
 }
 
 int main()
 {
-  hello<<<1,10>>>();
+  // 2 blocks of 1024 threads each
+  hello<<<2,1024>>>();
   cudaThreadSynchronize(); //deprecated
   return 0;
 }
