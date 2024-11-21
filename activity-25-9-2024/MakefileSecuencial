@@ -1,7 +1,7 @@
 # Define the compiler and the executable name
 CC = mpicc
-TARGET = Secuencial
-SRC = Secuencial.c
+TARGET = vector_add
+SRC = vector_add.c
 
 # Default rule to compile the code
 all: $(TARGET)

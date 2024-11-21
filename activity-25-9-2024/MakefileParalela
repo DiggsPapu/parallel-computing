@@ -1,7 +1,7 @@
 # Define the compiler and the executable name
 CC = mpicc
-TARGET = Paralela
-SRC = Paralela.c
+TARGET = mpi_vector_add
+SRC = mpi_vector_add.c
 
 # Default rule to compile the code
 all: $(TARGET)
